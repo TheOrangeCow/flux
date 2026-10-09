@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "flux-sockets"
-version = "0.6.4"
+version = "0.6.5"
 description = "Dead-simple sockets: events, rooms, JSON and WebSockets in a few lines."
 requires-python = ">=3.8"
 dependencies = []
