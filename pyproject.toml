@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flux-sockets"
+version = "0.6.4"
+description = "Dead-simple sockets: events, rooms, JSON and WebSockets in a few lines."
+requires-python = ">=3.8"
+dependencies = []
+license = "MIT"
+keywords = ["sockets", "networking", "websockets", "events", "multiplayer", "realtime"]
+
+[project.urls]
+Homepage = "https://github.com/TheOrangeCow/flux"
+Repository = "https://github.com/TheOrangeCow/flux"
+Issues = "https://github.com/TheOrangeCow/flux/issues"
+
+[tool.setuptools]
+packages = ["flux"]

@@ -1,0 +1,43 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>flux cubes</title>
+<style>
+    body {
+        font: 14px sans-serif;
+        background: #111;
+        color: #ccc;
+        text-align: center
+    }
+
+    canvas {
+        background: #1c1c24;
+        margin-top: 10px
+    }
+</style>
+<p>Arrow keys / WASD to move. Open this page in two tabs.</p>
+<canvas id="c" width="600" height="400"></canvas>
+<script src="../flux.js"></script>
+<script>
+    const ctx = document.getElementById("c").getContext("2d");
+    const sock = new Flux("ws://localhost:5000");
+    let players = {};
+    sock.on("players", p => { players = p; draw(); });
+
+    const keys = {};
+    addEventListener("keydown", e => keys[e.key.toLowerCase()] = true);
+    addEventListener("keyup", e => keys[e.key.toLowerCase()] = false);
+    setInterval(() => {
+        const me = players[sock.id]; if (!me) return;
+        const dx = (keys.arrowright || keys.d ? 1 : 0) - (keys.arrowleft || keys.a ? 1 : 0);
+        const dy = (keys.arrowdown || keys.s ? 1 : 0) - (keys.arrowup || keys.w ? 1 : 0);
+        if (dx || dy) sock.emit("move", { x: me.x + dx * 6, y: me.y + dy * 6 });
+    }, 33);
+
+    function draw() {
+        ctx.clearRect(0, 0, 600, 400);
+        for (const [id, p] of Object.entries(players)) {
+            ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, 20, 20);
+            if (id === sock.id) { ctx.strokeStyle = "#fff"; ctx.strokeRect(p.x - 2, p.y - 2, 24, 24); }
+        }
+    }
+</script>
